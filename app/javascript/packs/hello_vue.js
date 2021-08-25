@@ -37,6 +37,7 @@ import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 import Current from '../current.vue'
 import Approve from '../approve.vue'
+import Created from '../created.vue'
 
 import ActionCableVue from 'actioncable-vue'
 import vueMoment from 'vue-moment'
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const app = new Vue({
     el: '#app',
-    components: { App, Current, Approve }
+    components: { App, Current, Approve, Created }
   })
 
   

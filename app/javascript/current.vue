@@ -1,6 +1,7 @@
 <template>
   <div id="">
-      <p v-if="loading"> Loading .... </p>
+      <p class="text-muted fs-5 fw-bold text-end"> .سجل اليوم  </p>
+      <p v-if="loading"> جاري التحميل .... </p>
       <div v-for="user in users" :key="user.id" v-bind:class="{cool: isCool}">
          <div v-if="user.status == 2 || user.status == 5">
            

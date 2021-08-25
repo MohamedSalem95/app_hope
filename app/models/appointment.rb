@@ -13,5 +13,6 @@ class Appointment < ApplicationRecord
 
     # callbacks
     after_update_commit { AppointmentUpdateJob.perform_now self }
+    after_create_commit { AppointmentCreateJob.perform_now self }
 
 end
