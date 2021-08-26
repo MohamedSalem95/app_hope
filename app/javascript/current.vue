@@ -2,7 +2,7 @@
   <div id="">
       <p class="text-muted fs-5 fw-bold text-end"> .سجل اليوم  </p>
       <p v-if="loading"> جاري التحميل .... </p>
-      <div v-for="user in users" :key="user.id" v-bind:class="{cool: isCool}">
+      <div v-for="user in users" :key="user.id">
          <div v-if="user.status == 2 || user.status == 5">
            
            <div v-if="user.status == 2"   class="bg-success text-white br-10 p-1 border-top mb-1">
@@ -19,12 +19,12 @@
               </p>
               <div class="d-grid">
 
-                <button class="btn btn-warning fw-bold"> تم الخروج </button>
+                <button class="btn btn-warning fw-bold" @click="alreadyIn(user.id)"> تم الخروج </button>
               </div>
 
            </div>
 
-           <div v-if="user.status == 5"   class="bg-light text-black br-10 p-1 border-top mb-1">
+           <div v-if="user.status == 5"   class="bg-light text-black br-10 p-1 border mb-1">
              
               <p class="text-center fw-bold fs-6 mb-1 text-success"> تم الدخول </p> 
               <p class="fw-bold fs-6 mb-1"> {{ user.name }} </p>
@@ -58,7 +58,6 @@ export default {
     return {
       id: 0,
       users: [],
-      isCool: false,
       loading: false
     }
   },
@@ -71,13 +70,23 @@ export default {
         this.id = data['id']
         axios.get(`appointments/${this.id}`).then(res => {
             console.log(res['data'])
+            console.log('from here')
             this.users.splice(0, 0, res['data'])
         })
       },
       disconnected() {}
     }
   },
-  methods: {},
+  methods: {
+    alreadyIn(id) {
+      axios.patch(`http://127.0.0.1:3000/appointments/${id}/already_in`, { status: 5 }).then(res => {
+        if(res['data']['success'] == true) {
+          this.users.find( user => user.id == id ).status = 5
+          delete this.users.find( user => user.id == id )
+        }
+      })
+    }
+  },
   mounted () {
     this.$cable.subscribe({
       channel: 'AppointmentChannel'

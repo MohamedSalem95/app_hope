@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   put 'appointments/:id/delay', to: 'appointments#delay_save', as: 'appointment_delay_save'
   get 'appointments/today_approve/today', to: 'appointments#today_approve'
 
+  patch 'appointments/:id/already_in', to: 'appointments#already_in'
 
   root to: 'welcome#index', as: 'root'
   mount ActionCable.server => '/cable'

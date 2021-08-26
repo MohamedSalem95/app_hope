@@ -1,4 +1,5 @@
 class AppointmentsController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: [:already_in]
 
     def show
         @appointment = Appointment.find(params[:id])
@@ -52,6 +53,12 @@ class AppointmentsController < ApplicationController
         end
     end
 
+    def already_in
+        @appointment = Appointment.find(params[:id])
+        @appointment.update!(status: 5)
+        render json: { success: true }
+    end
+
 
     private
     def appointment_params
@@ -60,6 +67,10 @@ class AppointmentsController < ApplicationController
 
     def appointment_delay_params
         params.require(:appointment).permit(:delay_date, :app_time)
+    end
+
+    def update_status_params
+        params.require(:appointment).permit(:status)
     end
 
 end

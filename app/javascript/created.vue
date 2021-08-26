@@ -43,6 +43,7 @@
             </td>
 
             <td>
+                <button v-if="user.visible" class="btn btn-outline-success btn-sm fw-bold" @click="approveUser(user.id)"> دخول </button>
             </td>
 
       </tr>
@@ -58,14 +59,15 @@ import axios from 'axios'
 import Approve from './approve.vue'
 
 export default {
+  components: {
+      Approve
+  },
   data: function () {
     return {
         count: 0,
-        users: []
+        users: [],
+        //visible: true
     }
-  },
-  components: {
-      Approve
   },
   channels: {
     AppointmentCreateChannel: {
@@ -77,37 +79,53 @@ export default {
           this.id = data['id']
           axios.get(`http://127.0.0.1:3000/appointments/${this.id}`).then(res => {
               console.log(res['data'])
+              if(res['data'].status == 5 || res['data'].status == 4 || res['data'].status == 2 || res['data'].status == 3) {
+                res['data'].visible = false
+              }
+              else {
+                res['data'].visible = true
+              }
               this.users.splice(0, 0, res['data'])
           })
       },
       disconnected() {}
+    },
+
+     AppointmentChannel: {
+      connected() {
+      },
+      received(data) {},
+      disconnected() {}
     }
   },
   methods: {
-      approveUser() {
+      approveUser(id) {
           this.$cable.perform({
               channel: 'AppointmentChannel',
               action: 'approve',
               data: {
-                  id: this.id
+                  id: id
               }
           })
-      },
-      addOne() {
-          this.count = this.count + 1
+          this.users.find(user => user.id == id).visible = false
+          //this.visible = false
       }
   },
   mounted () {
+    /*
+    if(this.status == 5 || this.status == 4 || this.status == 2 || this.status == 3) {
+      this.visible = false
+    }*/
     this.$cable.subscribe({
       channel: 'AppointmentCreateChannel'
+    })
+    this.$cable.subscribe({
+      channel: 'AppointmentChannel'
     })
   }
 }
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
+
 </style>

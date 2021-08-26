@@ -1,17 +1,21 @@
 <template>
   <div id="">
-      <button class="btn btn-outline-success btn-sm fw-bold" @click="approveUser"> دخول </button>
+      <button v-if="visible" class="btn btn-outline-success btn-sm fw-bold" @click="approveUser"> دخول </button>
     
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Approve',
     props: {
-        id: Number
+      id: Number,
+      status: Number
     },
   data: function () {
-    return {}
+    return {
+      visible: true
+    }
   },
   channels: {
     AppointmentChannel: {
@@ -31,9 +35,13 @@ export default {
                   id: this.id
               }
           })
+          this.visible = false
       }
   },
   mounted () {
+    if(this.status == 5 || this.status == 4 || this.status == 2 || this.status == 3) {
+      this.visible = false
+    }
     this.$cable.subscribe({
       channel: 'AppointmentChannel'
     })
