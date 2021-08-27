@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <%= f.label :delay_date, 'تاريخ التاجيل', class: 'fw-bold mb-1' %> <span class="text-danger">*</span>
+                            <%= f.label :delay_date, 'تاريخ التاجيل', class: 'fw-bold mb-1' %> <span class="text-danger">*</span> <br>
                             <%= f.date_field :delay_date, class: "form-control mb-2 #{ 'is-invalid' if @appointment.errors[:delay_date].any? }" %>
                             <% @appointment.errors[:delay_date].each do |error| %>
                                 <Strong class="text-danger"> <%= error %> </Strong>
@@ -31,7 +31,7 @@
                 </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <%= f.label :app_time, 'الوقت', class: 'fw-bold mb-1' %> <span class="text-danger">*</span>
+                            <%= f.label :app_time, 'الوقت', class: 'fw-bold mb-1' %> <span class="text-danger">*</span>  <br>
                             <%= f.time_field :app_time, class: "form-control mb-2  #{ 'is-invalid' if @appointment.errors[:app_time].any? }" %>
 
                             <% @appointment.errors[:app_time].each do |error| %>

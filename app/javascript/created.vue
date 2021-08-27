@@ -79,12 +79,7 @@ export default {
           this.id = data['id']
           axios.get(`http://127.0.0.1:3000/appointments/${this.id}`).then(res => {
               console.log(res['data'])
-              if(res['data'].status == 5 || res['data'].status == 4 || res['data'].status == 2 || res['data'].status == 3) {
-                res['data'].visible = false
-              }
-              else {
-                res['data'].visible = true
-              }
+              res['data'].visible = true
               this.users.splice(0, 0, res['data'])
           })
       },

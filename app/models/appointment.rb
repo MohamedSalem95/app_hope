@@ -8,7 +8,7 @@ class Appointment < ApplicationRecord
     validates_presence_of :name, message: 'من فضلك ادخل الاسم  🙂 '
     validates_presence_of :from, message: 'من فضلك ادخل الجهه  🤓 '
     validates_presence_of :app_date, message: ' من فضلك ادخل التاريخ  😤 '
-    # validates_presence_of :delay_date, message: ' من فضلك ادخل التاريخ  😤 '
+    # validates_presence_of :delay_date, message: ' من فضلك ادخل التاريخ  😤 ', unless: -> { self.new_record? }
     validates_presence_of :app_time, message: ' من فضلك ادخل الوقت  😡  '
 
     # callbacks

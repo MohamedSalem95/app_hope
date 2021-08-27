@@ -55,7 +55,7 @@ class AppointmentsController < ApplicationController
 
     def already_in
         @appointment = Appointment.find(params[:id])
-        @appointment.update!(status: 5)
+        @appointment.update_attribute(:status, 5)
         render json: { success: true }
     end
 

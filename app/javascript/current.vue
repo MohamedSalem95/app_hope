@@ -67,12 +67,15 @@ export default {
         console.log('connected from Current')
       },
       received(data) {
+        console.log(data)
         this.id = data['id']
         axios.get(`appointments/${this.id}`).then(res => {
             console.log(res['data'])
             console.log('from here')
             this.users.splice(0, 0, res['data'])
         })
+        let audio = new Audio(require('./audios/to-the-point.mp3'))
+        audio.play()
       },
       disconnected() {}
     }
