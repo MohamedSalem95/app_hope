@@ -45,10 +45,13 @@ import TurbolinksAdapter from 'vue-turbolinks'
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  let devUrl = 'ws://127.0.0.1:3000/cable';
+  let prodUrl = 'ws://appmanager251.herokuapp.com/cable'
+
   Vue.use(ActionCableVue, {
     debug: true,
     debugLevel: 'error',
-    connectionUrl: 'ws://127.0.0.1:3000/cable',
+    connectionUrl: devUrl,
     connectImmediately: true
   })
 

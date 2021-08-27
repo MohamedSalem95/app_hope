@@ -53,6 +53,9 @@
 <script>
 import axios from 'axios'
 
+let devUrl = 'http://127.0.0.1:3000/appointments/'
+let prodUrl = 'https://appmanager251.herokuapp.com/appointments/'
+
 export default {
   data: function () {
     return {
@@ -69,7 +72,7 @@ export default {
       received(data) {
         console.log(data)
         this.id = data['id']
-        axios.get(`appointments/${this.id}`).then(res => {
+        axios.get(`${devUrl}${this.id}`).then(res => {
             console.log(res['data'])
             console.log('from here')
             this.users.splice(0, 0, res['data'])
@@ -82,7 +85,7 @@ export default {
   },
   methods: {
     alreadyIn(id) {
-      axios.patch(`http://127.0.0.1:3000/appointments/${id}/already_in`, { status: 5 }).then(res => {
+      axios.patch(`${devUrl}${id}/already_in`, { status: 5 }).then(res => {
         if(res['data']['success'] == true) {
           this.users.find( user => user.id == id ).status = 5
           delete this.users.find( user => user.id == id )

@@ -58,6 +58,9 @@ import axios from 'axios'
 
 import Approve from './approve.vue'
 
+let devUrl = 'http://127.0.0.1:3000/appointments/'
+let prodUrl = 'https://appmanager251.herokuapp.com/appointments/'
+
 export default {
   components: {
       Approve
@@ -77,7 +80,7 @@ export default {
       received(data) {
           console.log(data)
           this.id = data['id']
-          axios.get(`http://127.0.0.1:3000/appointments/${this.id}`).then(res => {
+          axios.get(`${devUrl}${this.id}`).then(res => {
               console.log(res['data'])
               res['data'].visible = true
               this.users.splice(0, 0, res['data'])
